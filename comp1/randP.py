@@ -10,4 +10,4 @@ for j in range(0,K):
         random.seed([graph.row[i],graph.col[i],j])
         Y[graph.row[i],j]=Y[graph.row[i],j]+sign(random.random()-.5)*graph.data[i]
     
-Y/sqrt(K)
+Y=Y/sqrt(K)
