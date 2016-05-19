@@ -1,4 +1,4 @@
-states=2;
+states=9;
 emissions=5;
 TRGUESS=zeros(states);
 EMITGUESS=zeros(states,emissions);
@@ -15,12 +15,5 @@ for i=1:states
     EMITGUESS(i,:)=EMITGUESS(i,:)/sum(EMITGUESS(i,:));
 end
 
-[ESTTR,ESTEMIT] = hmmtrain(dat1,TRGUESS,EMITGUESS);
+[ESTTR,ESTEMIT] = hmmtrain(dat1,TRGUESS,EMITGUESS,'maxiterations',1000);
 
-for i=101:1000
-    ind=find(isnan(dat(i,:)));
-    if(ind>1)
-        subs=dat(i,1:ind-1);
-        likelystates = hmmviterbi(subs, ESTTR, ESTEMIT);
-    end
-end
