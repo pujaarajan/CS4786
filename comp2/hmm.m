@@ -8,6 +8,9 @@ for i=1:states
     end
     TRGUESS(i,:)=TRGUESS(i,:)/sum(TRGUESS(i,:));
 end
+for i=1:5
+    EMITGUESS(1,i)=sum(dat(:,1)==i)/1000;
+end
 for i=1:states
     for j=1:emissions
         EMITGUESS(i,j)=rand();
@@ -15,5 +18,10 @@ for i=1:states
     EMITGUESS(i,:)=EMITGUESS(i,:)/sum(EMITGUESS(i,:));
 end
 
-[ESTTR,ESTEMIT] = hmmtrain(dat1,TRGUESS,EMITGUESS,'maxiterations',1000);
 
+
+[ESTTR,ESTEMIT] = hmmtrain(dat3,TRGUESS,EMITGUESS,'maxiterations',100);
+
+for i=1:5
+    ESTEMIT(1,i)=sum(dat(:,1)==i)/1000;
+end

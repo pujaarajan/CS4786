@@ -4,7 +4,26 @@ for i=101:1000
     if(ind>1)
         subs=dat(i,1:ind-1);
         likelystates = hmmviterbi(subs, ESTTR, ESTEMIT);
-        [num,ind2]=max(ESTEMIT(likelystates(size(likelystates,2)),:));
+
+        PSTATES = hmmdecode(subs,ESTTR,ESTEMIT);
+        Plast=PSTATES(:,ind-1);
+        Pcurr=zeros(states,1);
+        for ii=1:states
+            for jj=1:states
+                Pcurr(ii)=Pcurr(ii)+Plast(jj)*ESTTR(jj,ii);
+            end
+        end
+        Pem=zeros(emissions,1);
+        for ii=1:states
+            for jj=1:emissions
+                Pem(jj)=Pem(jj)+Plast(ii)*ESTEMIT(ii,jj);
+            end
+        end        
+        [num,ind2]=max(Pem);
+        
+        %[num,ind2]=max(ESTEMIT(likelystates(size(likelystates,2)),:));
+        
+
     else
         [num,ind2]=max(ESTEMIT(1,:));
     end
